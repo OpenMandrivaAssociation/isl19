@@ -7,7 +7,7 @@
 Summary:	Integer Set Library
 Name:		isl
 Version:	0.11.1
-Release:	1
+Release:	2
 License:	MIT
 Group:		System/Libraries
 URL:		http://www.kotnet.org/~skimo/isl/
@@ -96,6 +96,9 @@ make check
 
 %install
 %makeinstall_std
+
+# (tpg) not needed ?
+rm -rf %{buildroot}%{_libdir}/*%{name}*-gdb.py
 
 %files -n %libname
 %_libdir/libisl.so.%{major}*
