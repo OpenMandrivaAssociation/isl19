@@ -1,17 +1,15 @@
-%define major 10
-
-%define libname %mklibname %{name} %{major}
-%define develname %mklibname %{name} -d
-%define staticname %mklibname %{name} -d -s
+%define major	10
+%define libname	%mklibname %{name} %{major}
+%define devname	%mklibname %{name} -d
 
 Summary:	Integer Set Library
 Name:		isl
-Version:	0.11.1
-Release:	2
+Version:	0.11.2
+Release:	1
 License:	MIT
 Group:		System/Libraries
-URL:		http://www.kotnet.org/~skimo/isl/
-Source0:	http://www.kotnet.org/~skimo/isl/isl-%version.tar.lzma
+Url:		http://www.kotnet.org/~skimo/isl/
+Source0:	http://www.kotnet.org/~skimo/isl/%{name}-%{version}.tar.lzma
 BuildRequires:	gmp-devel
 
 %description
@@ -42,52 +40,23 @@ It also includes an ILP solver based on generalized basis reduction,
 transitive closures on maps (which may encode infinite graphs),
 dependence analysis and bounds on piecewise step-polynomials.
 
-%package -n	%{develname}
+%package -n	%{devname}
 Summary:	Development files for the isl Integer Set Library
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
+Obsoletes:	%{_lib}isl-static-devel < 0.11.1-3
 
-%description -n	%{develname}
+%description -n	%{devname}
 Header files for the isl Integer Set Library.
-
-isl is a library for manipulating sets and relations of integer points
-bounded by linear constraints. Supported operations on sets include
-intersection, union, set difference, emptiness check, convex hull,
-(integer) affine hull, integer projection, computing the lexicographic
-minimum using parametric integer programming, coalescing and parametric
-vertex enumeration.
-
-It also includes an ILP solver based on generalized basis reduction,
-transitive closures on maps (which may encode infinite graphs),
-dependence analysis and bounds on piecewise step-polynomials.
-
-%package -n	%{staticname}
-Summary:	Static library files for the isl Integer Set Library
-Group:		Development/C
-Requires:	%{develname} = %{version}-%{release}
-Provides:	%{name}-devel = %{version}-%{release}
-
-%description -n	%{staticname}
-Static library files for the isl Integer Set Library.
-
-isl is a library for manipulating sets and relations of integer points
-bounded by linear constraints. Supported operations on sets include
-intersection, union, set difference, emptiness check, convex hull,
-(integer) affine hull, integer projection, computing the lexicographic
-minimum using parametric integer programming, coalescing and parametric
-vertex enumeration.
-
-It also includes an ILP solver based on generalized basis reduction,
-transitive closures on maps (which may encode infinite graphs),
-dependence analysis and bounds on piecewise step-polynomials.
 
 %prep
 %setup -q
 autoreconf -fi
 
 %build
-%configure
+%configure \
+	--disable-static
 %make
 
 %check
@@ -100,13 +69,11 @@ make check
 # (tpg) not needed ?
 rm -rf %{buildroot}%{_libdir}/*%{name}*-gdb.py
 
-%files -n %libname
-%_libdir/libisl.so.%{major}*
+%files -n %{libname}
+%{_libdir}/libisl.so.%{major}*
 
-%files -n %develname
-%_libdir/libisl.so
-%_includedir/*
-%_libdir/pkgconfig/*.pc
+%files -n %{devname}
+%{_libdir}/libisl.so
+%{_includedir}/*
+%{_libdir}/pkgconfig/*.pc
 
-%files -n %staticname
-%_libdir/*.a
