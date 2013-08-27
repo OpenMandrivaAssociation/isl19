@@ -4,12 +4,14 @@
 
 Summary:	Integer Set Library
 Name:		isl
-Version:	0.11.2
+Version:	0.12.1
 Release:	1
 License:	MIT
 Group:		System/Libraries
-Url:		http://www.kotnet.org/~skimo/isl/
-Source0:	http://www.kotnet.org/~skimo/isl/%{name}-%{version}.tar.lzma
+Url:		git://repo.or.cz/isl.git
+Source0:	http://www.kotnet.org/~skimo/isl/%{name}-%{version}.tar.xz
+# See http://gcc.gnu.org/bugzilla/show_bug.cgi?id=58012
+Patch0:		isl-no-iostream.patch
 BuildRequires:	gmp-devel
 
 %description
@@ -52,6 +54,7 @@ Header files for the isl Integer Set Library.
 
 %prep
 %setup -q
+%apply_patches
 autoreconf -fi
 
 %build
