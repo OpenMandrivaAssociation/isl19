@@ -5,7 +5,7 @@
 Summary:	Integer Set Library
 Name:		isl
 Version:	0.12.1
-Release:	2
+Release:	3
 License:	MIT
 Group:		System/Libraries
 Url:		git://repo.or.cz/isl.git
