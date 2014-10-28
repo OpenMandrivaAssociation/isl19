@@ -5,12 +5,12 @@
 
 Summary:	Integer Set Library
 Name:		isl
-Version:	0.13
-Release:	3
+Version:	0.14
+Release:	1
 License:	MIT
 Group:		System/Libraries
 Url:		git://repo.or.cz/isl.git
-Source0:	http://isl.gforge.inria.fr/isl-0.13.tar.xz
+Source0:	http://isl.gforge.inria.fr/isl-%{version}.tar.xz
 # See http://gcc.gnu.org/bugzilla/show_bug.cgi?id=58012
 Patch0:		isl-no-iostream.patch
 BuildRequires:	gmp-devel
