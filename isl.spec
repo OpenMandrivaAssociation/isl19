@@ -1,12 +1,12 @@
-%define major	13
+%define major	15
 %define libname	%mklibname %{name} %{major}
 %define devname	%mklibname %{name} -d
 %define staticname %mklibname %{name} -s -d
 
 Summary:	Integer Set Library
 Name:		isl
-Version:	0.14
-Release:	2
+Version:	0.15
+Release:	1
 License:	MIT
 Group:		System/Libraries
 Url:		git://repo.or.cz/isl.git
