@@ -2,6 +2,8 @@
 %define libname %mklibname %{name} %{major}
 %define devname %mklibname %{name} -d
 %define staticname %mklibname %{name} -s -d
+# (tpg) disable it untill gdb will be fixed
+%define _python_bytecompile_build 0
 
 # (tpg) optimize it a bit
 %global optflags %optflags -O3
@@ -9,7 +11,7 @@
 Summary:	Integer Set Library
 Name:		isl
 Version:	0.18
-Release:	1
+Release:	2
 License:	MIT
 Group:		System/Libraries
 Url:		git://repo.or.cz/isl.git
@@ -30,11 +32,11 @@ It also includes an ILP solver based on generalized basis reduction,
 transitive closures on maps (which may encode infinite graphs),
 dependence analysis and bounds on piecewise step-polynomials.
 
-%package -n	%{libname}
+%package -n %{libname}
 Summary:	Integer Set Library
 Group:		System/Libraries
 
-%description -n	%{libname}
+%description -n %{libname}
 isl is a library for manipulating sets and relations of integer points
 bounded by linear constraints. Supported operations on sets include
 intersection, union, set difference, emptiness check, convex hull,
@@ -46,41 +48,42 @@ It also includes an ILP solver based on generalized basis reduction,
 transitive closures on maps (which may encode infinite graphs),
 dependence analysis and bounds on piecewise step-polynomials.
 
-%package -n	%{devname}
+%package -n %{devname}
 Summary:	Development files for the isl Integer Set Library
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 
-%description -n	%{devname}
+%description -n %{devname}
 Header files for the isl Integer Set Library.
 
-%package -n	%{staticname}
+%package -n %{staticname}
 Summary:	Static library for the isl Integer Set Library
 Group:		Development/C
 Requires:	%{devname} = %{EVRD}
 
-%description -n	%{staticname}
+%description -n %{staticname}
 Static library for the isl Integer Set Library
 
 %prep
 %setup -q
-%apply_patches
+%autopatch -p1
 autoreconf -fi
 
 %build
 %configure --enable-static
-%make
+%make_build
 
 %check
 # All tests must pass
 make check
 
 %install
-%makeinstall_std
+%make_install
 
 mkdir -p %{buildroot}/%{_datadir}/gdb/auto-load/%{_libdir}
 mv %{buildroot}/%{_libdir}/*.py %{buildroot}/%{_datadir}/gdb/auto-load/%{_libdir}
+
 %files -n %{libname}
 %{_libdir}/libisl.so.%{major}
 %{_libdir}/libisl.so.%{major}.[0-9].[0-9]
