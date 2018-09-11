@@ -10,8 +10,8 @@
 
 Summary:	Integer Set Library
 Name:		isl
-Version:	0.18
-Release:	2
+Version:	0.20
+Release:	1
 License:	MIT
 Group:		System/Libraries
 Url:		git://repo.or.cz/isl.git
@@ -66,8 +66,7 @@ Requires:	%{devname} = %{EVRD}
 Static library for the isl Integer Set Library
 
 %prep
-%setup -q
-%autopatch -p1
+%autosetup -p1
 autoreconf -fi
 
 %build
