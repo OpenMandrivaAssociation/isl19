@@ -2,14 +2,15 @@
 %define libname %mklibname %{name} %{major}
 %define devname %mklibname %{name} -d
 %define staticname %mklibname %{name} -s -d
-# (tpg) disable it untill gdb will be fixed
-%define _python_bytecompile_build 0
 
 # (tpg) optimize it a bit
-%global optflags %optflags -O3
+%global optflags %optflags -Ofast
 
 Summary:	Integer Set Library
 Name:		isl
+# BIG FAT WARNING: gcc requires isl. That includes the parts of gcc used by
+# clang. When updating to a version that changes the soname, you MUST build
+# a compat package for the old version FIRST (see isl13, isl15 packages).
 Version:	0.20
 Release:	1
 License:	MIT
@@ -90,6 +91,7 @@ mv %{buildroot}/%{_libdir}/*.py %{buildroot}/%{_datadir}/gdb/auto-load/%{_libdir
 %{_includedir}/*
 %{_libdir}/pkgconfig/*.pc
 %{_datadir}/gdb/auto-load/%{_libdir}/*%{name}*-gdb.py
+%{_datadir}/gdb/auto-load/%{_libdir}/__pycache__/*
 
 %files -n %{staticname}
 %{_libdir}/*.a
