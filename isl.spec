@@ -4,7 +4,7 @@
 %define staticname %mklibname %{name} -s -d
 
 # (tpg) optimize it a bit
-%global optflags %optflags -Ofast
+%global optflags %optflags -O3
 
 Summary:	Integer Set Library
 Name:		isl
@@ -12,7 +12,7 @@ Name:		isl
 # clang. When updating to a version that changes the soname, you MUST build
 # a compat package for the old version FIRST (see isl13, isl15 packages).
 Version:	0.20
-Release:	2
+Release:	3
 License:	MIT
 Group:		System/Libraries
 Url:		git://repo.or.cz/isl.git
