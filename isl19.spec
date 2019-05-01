@@ -6,13 +6,10 @@
 # (tpg) optimize it a bit
 %global optflags %optflags -O3
 
-Summary:	Integer Set Library
-Name:		isl
-# BIG FAT WARNING: gcc requires isl. That includes the parts of gcc used by
-# clang. When updating to a version that changes the soname, you MUST build
-# a compat package for the old version FIRST (see isl13, isl15 packages).
+Summary:	Old version of the Integer Set Library
+Name:		isl19
 Version:	0.20
-Release:	3
+Release:	4
 License:	MIT
 Group:		System/Libraries
 Url:		git://repo.or.cz/isl.git
@@ -31,8 +28,11 @@ It also includes an ILP solver based on generalized basis reduction,
 transitive closures on maps (which may encode infinite graphs),
 dependence analysis and bounds on piecewise step-polynomials.
 
+This is an old version of the ISL library, provided for binary
+compatibility with old code only.
+
 %package -n %{libname}
-Summary:	Integer Set Library
+Summary:	Old version of the Integer Set Library
 Group:		System/Libraries
 
 %description -n %{libname}
@@ -46,6 +46,10 @@ vertex enumeration.
 It also includes an ILP solver based on generalized basis reduction,
 transitive closures on maps (which may encode infinite graphs),
 dependence analysis and bounds on piecewise step-polynomials.
+
+This is an old version of the ISL library, provided for binary
+compatibility with old code only.
+
 
 %package -n %{devname}
 Summary:	Development files for the isl Integer Set Library
@@ -65,7 +69,7 @@ Requires:	%{devname} = %{EVRD}
 Static library for the isl Integer Set Library
 
 %prep
-%autosetup -p1
+%autosetup -p1 -n isl-%{version}
 autoreconf -fi
 
 %build
@@ -79,19 +83,12 @@ make check
 %install
 %make_install
 
-mkdir -p %{buildroot}/%{_datadir}/gdb/auto-load/%{_libdir}
-mv %{buildroot}/%{_libdir}/*.py %{buildroot}/%{_datadir}/gdb/auto-load/%{_libdir}
+# No -devel for compat packages
+rm -rf	%{buildroot}%{_libdir}/libisl.so \
+	%{buildroot}%{_libdir}/*.{a,py} \
+	%{buildroot}%{_libdir}/pkgconfig \
+	%{buildroot}%{_includedir}
 
 %files -n %{libname}
 %{_libdir}/libisl.so.%{major}
 %{_libdir}/libisl.so.%{major}.[0-9].[0-9]
-
-%files -n %{devname}
-%{_libdir}/libisl.so
-%{_includedir}/*
-%{_libdir}/pkgconfig/*.pc
-%{_datadir}/gdb/auto-load/%{_libdir}/*%{name}*-gdb.py
-%{_datadir}/gdb/auto-load/%{_libdir}/__pycache__/*
-
-%files -n %{staticname}
-%{_libdir}/*.a
