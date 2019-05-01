@@ -1,7 +1,5 @@
 %define major 19
-%define libname %mklibname %{name} %{major}
-%define devname %mklibname %{name} -d
-%define staticname %mklibname %{name} -s -d
+%define libname %mklibname isl %{major}
 
 # (tpg) optimize it a bit
 %global optflags %optflags -O3
@@ -49,24 +47,6 @@ dependence analysis and bounds on piecewise step-polynomials.
 
 This is an old version of the ISL library, provided for binary
 compatibility with old code only.
-
-
-%package -n %{devname}
-Summary:	Development files for the isl Integer Set Library
-Group:		Development/C
-Requires:	%{libname} = %{version}-%{release}
-Provides:	%{name}-devel = %{version}-%{release}
-
-%description -n %{devname}
-Header files for the isl Integer Set Library.
-
-%package -n %{staticname}
-Summary:	Static library for the isl Integer Set Library
-Group:		Development/C
-Requires:	%{devname} = %{EVRD}
-
-%description -n %{staticname}
-Static library for the isl Integer Set Library
 
 %prep
 %autosetup -p1 -n isl-%{version}
