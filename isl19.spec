@@ -12,6 +12,11 @@ License:	MIT
 Group:		System/Libraries
 Url:		git://repo.or.cz/isl.git
 Source0:	http://isl.gforge.inria.fr/isl-%{version}.tar.xz
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	gmp-devel
 
 %description
